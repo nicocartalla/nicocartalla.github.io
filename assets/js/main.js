@@ -4,6 +4,32 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+  (function() {
+	document.addEventListener('DOMContentLoaded', function() {
+	  const clipboardButton = document.querySelector('.clipboard-button');
+	  if (clipboardButton) {
+		clipboardButton.addEventListener('click', function(event) {
+		  event.preventDefault();
+		  const codeContainer = document.querySelector('.code-container');
+		  const code = codeContainer.querySelector('code').innerText;
+		  
+		  // Copiar al portapapeles
+		  navigator.clipboard.writeText(code);
+		  
+		  // Añadir efecto de pestañado
+		  codeContainer.classList.add('copied');
+		  
+		  // Quitar el efecto después de un corto período de tiempo
+		  setTimeout(() => {
+			codeContainer.classList.remove('copied');
+		  }, 500);
+		});
+	  }
+	});
+  })();
+  
+
+
 (function($) {
 
 	var	$window = $(window),

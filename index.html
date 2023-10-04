@@ -1,16 +1,14 @@
 <!DOCTYPE HTML>
-<!--
-	Helios by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-		<title>Helios by HTML5 UP</title>
+		<title>Nicolás Cartalla portfolio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -34,9 +32,8 @@
 						<nav id="nav">
 							<ul>
 								<li><a href="index.html">About</a></li>
-								<li><a href="#">Skills</a></li>
 								<li><a href="#">Projects</a></li>
-								<li><a href="#">Case studies</a></li>
+								<li><a class="scrolly" href="#tasks">Case studies</a></li>
 							</ul>
 						</nav>
 
@@ -48,7 +45,7 @@
 					<header>
 						<h2>A brief description of <strong>me</strong>.</h2>
 						<p>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad saepe nulla soluta corporis exercitationem repellat expedita cum praesentium quisquam, esse accusamus facere alias voluptate, obcaecati magnam dolore doloremque consectetur quod.
+							I am a student of Software Engineering and passionate about the world of Artificial Intelligence and Machine Learning. Currently, I am studying a Machine Learning course at the Faculty of the Universidad Católica del Uruguay. My objective is to apply the acquired knowledge to solve problems and contribute to the advancement of this exciting area of technology. This portfolio is a sample of the projects and skills I have developed during the course.
 						</p>
 					</header>
 				</section>
@@ -85,103 +82,33 @@
 			<!-- Banner -->
 			<section id="banner">
 				<header>
-					<h2>Todas mis tareas <strong>Importantes</strong>.</h2>
-					<p>
-						A un listado de las  <a href="http://html5up.net">tareas</a>.
-					</p>
-					<p>En esta breve seccion voy a estar contando algunas de las tareas mas importantes que he ido realizando.</p>
+					<h2>Case <strong>Studies</strong>.</h2>
+					<p>In this short section I will be telling you about some of the most important tasks I have been doing.</p>
 
 				</header>
 			</section>
 
-				<!-- Carousel -->
-				<section class="carousel">
-					<div class="reel">
-						<article>
-							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 1
-								</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
+			<!-- carrousel -->
+			<div id="carrousel"></div>
 
-						<article>
-							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 2</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
-
-						<article>
-							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 3</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
-
-						<article>
-							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 4</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
-
-						<article>
-							<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 5</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
-
-						<article>
-							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Tarea importante 6</a></h3>
-							</header>
-							<p>Un poco de contexto sobre la tarea</p>
-						</article>
-
-					</div>
-				</section>
+			<script>
+				fetch('../components/carrousel.html')
+					.then(response => response.text())
+					.then(data => {
+						document.getElementById('carrousel').innerHTML = data;
+					});
+			</script>			
 
 			<!-- Footer -->
-				<div id="footer">
-					<div class="container">
+			<div id="footer"></div>
 
-						<div class="row">
-							<div class="col-12">
-
-								<!-- Contact -->
-									<section class="contact">
-										<header>
-											<!-- <h3>Nisl turpis nascetur interdum?</h3> -->
-										</header>
-										<!-- <p>Urna nisl non quis interdum mus ornare ridiculus egestas ridiculus lobortis vivamus tempor aliquet.</p> -->
-										<ul class="icons">
-											<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-											<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
-										</ul>
-									</section>
-
-								<!-- Copyright -->
-									<div class="copyright">
-										<ul class="menu">
-											<li>&copy; Nicolás Cartalla. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-										</ul>
-									</div>
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-		</div>
+			<script>
+				fetch('../components/footer.html')
+					.then(response => response.text())
+					.then(data => {
+						document.getElementById('footer').innerHTML = data;
+					});
+			</script>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
@@ -192,6 +119,9 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 	</body>
 </html>

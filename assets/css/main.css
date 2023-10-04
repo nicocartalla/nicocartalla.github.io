@@ -2466,7 +2466,7 @@ input, select, textarea {
 		position: relative;
 		overflow: hidden;
 		padding: 6em 0 6em 0;
-		background: #2b252c;
+		background: #24262b;
 		color: #fff;
 	}
 
@@ -2958,7 +2958,7 @@ input, select, textarea {
 				top: 0;
 				width: 100%;
 				z-index: 10002;
-				background: #1f1920;
+				background: #24262b;
 				box-shadow: inset 0px -2px 5px 0px rgba(0, 0, 0, 0.25);
 				font-size: 1em;
 			}
@@ -3143,3 +3143,71 @@ input, select, textarea {
 					}
 
 	}
+
+	code {
+		background-color: #f9f9f9;
+		padding: 2px 4px;
+		font-family: "Courier New", monospace;
+		font-size: 90%;
+		color: #ef8376;  /* Color del texto */
+		border-radius: 4px;  /* Suaviza los bordes */
+	}
+
+	.code-container {
+		position: relative;
+		font-size: small;
+		border: 0px solid #ccc; /* Borde gris */
+		width: auto; /* Ancho del contenedor */
+		box-shadow: 0px 0px 10px #888888; /* Sombra leve */
+	  }
+	  
+	  .clipboard-button {
+		position: absolute;
+		top: 0.2em;
+		right: 1em;
+		background: none;
+		border: none;
+		cursor: pointer;
+		z-index: 1;
+		text-decoration: none; /* Elimina el subrayado del enlace */
+		color: inherit; /* Hereda el color del texto */
+	  }
+	  
+	  .clipboard-button:hover {
+		color: #5a8790; /* Cambia el color al hacer hover */
+	  }
+	  
+	  .fa-clipboard {
+		font-size: 1em;
+	  }
+	  .code-container.copied {
+		box-shadow: 0px 0px 20px #5a8790; /* Efecto de pestañado en verde */
+	  }
+	  
+	  
+	  pre {
+		margin: 0; /* Elimina el margen */
+		padding: 0; /* Elimina el padding */
+		text-align: center;
+	  }
+	  
+	  .list-elements {
+		width: 70%;
+	}
+	
+	.list-elements li {
+		margin-bottom: 1em;  /* Añade un margen inferior a cada elemento <li> */
+	}
+
+	.main-portfolio {
+		float: left;        /* Alinear a la izquierda */
+		display: block;
+		border-bottom: 0;
+		color: inherit;
+		font-weight: 900;
+		letter-spacing: 0.35em;
+		margin: 5em 0 2.5em 5em;
+		text-decoration: none;
+		text-transform: uppercase;
+		display: inline-block;
+}
