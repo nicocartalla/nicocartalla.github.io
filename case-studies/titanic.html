@@ -93,6 +93,153 @@ train_data = pd.read_csv("./input/train.csv")</code></pre>
 									We can give a visualization of the dataset by doing a <code>describe()</code> which will give us relevant information such as statistics 
 									(total, mean, standard deviation, minimum, maximum and quartiles) of the numerical values.
 									We also have the <code>head()</code> function that allows us to preview the first rows of the dataset.</p>
+									<img class="center" src="images/dataset-info.png" alt="" />						
+							</section>
+							<section>
+								<header>
+									<h3>Handling of Missing Values.</h3>
+								</header>
+								<p>
+									Handling missing values is a crucial part of the data analysis process, because with incomplete data our analysis and models can be negatively affected.
+For this case we will first perform a search for missing values in the dataset in order to define what methods or logic we will implement in order to fix these missing values.
+With the <code>isnull()</code> function on the dataset we obtain a new dataset with boolean values instead of data, applying the <code>sum()</code> function will return the missing values for each of the columns.
+								</p>
+								<img class="center" src="images/missing-values.png" alt="" />	
+								</br>
+								  <p>In this case, as we can see, the train dataset has 177 missing values for the Age attribute and 687 missing values for the Cabin attribute.
+
+									With these results we can now think about what actions to take to correct these values. This correction method is called Imputation.</p>
+									<p>For the Cabin values as we can see, out of a total of 891 elements, we are missing 687 elements, which is difficult to impute data considering the little information we have to be able to estimate, we also have to keep in mind the need for this data and in this case it would not give us much information as it is not a determining factor that influences the survival of a passenger.</p>
+									<p>Also at this stage we can remove the attributes that are not necessary for the case and may generate inconsistencies in the data to be analyzed, in this case we have a Ticket attribute that does not provide great value.</p>
+									<img class="center" src="images/dataset-info.png" alt="" />			
+								  </br>
+								  <p>To remove these values we can do it with <code>drop()</code> on the dataset indicating the labels or columns to be removed.</p>	
+								  <div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python">train_data.drop(['Cabin','Ticket'], axis=1, inplace=True)
+test_data.drop(['Cabin','Ticket'], axis=1, inplace=True)</code></pre>
+								  </div>	
+								  </br>
+								  <p>For the Cabin and Ticket attributes we decided to eliminate them since they do not provide much information and in particular Cabin had a large number of missing data, while for the Age attribute, which has missing data, we are interested in being able to somehow perform an imputation. 
+									The way in which we will determine the strategy to follow will be by looking at a graph with the distribution of the Age data.</p>
+								<img class="center" src="images/age-distribution.png" alt="" />	
+								</br>
+								<p>As we can see in the graph we have a distribution with a positive skew, which if we choose to impute the age value with the mean, we can be affected by very large values, while if we use the median, it would only be slightly affected.</p>
+								<div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python">train_data['Age'].fillna(train_data['Age'].median(), inplace=True)
+test_data['Age'].fillna(test_data['Age'].median(), inplace=True)
+train_data['Embarked'].fillna("S", inplace=True)
+test_data['Fare'].fillna(test_data['Fare'].median(), inplace=True)</code></pre>
+								  </div>
+								</br>
+								<img class="center" src="images/dataTest.png" alt="" />
+								</br>
+								<p>Data visualization is an essential part of data analysis, as it helps to understand patterns, trends and relationships in your data. The ability to visually identify data structures and any hidden signals is extremely crucial to properly tune the model and improve performance.</p>
+								<header>
+									<h3>Data visualization.</h3>
+								</header>
+								<p>We are going to use the Pandas, Matplotlib and Seaborn libraries to perform some basic visualizations of a dataset.</p>
+								</br>
+								
+									<b>Gender</b>
+								<p>When we analyze the variable "Gender", we can observe an interesting trend, the proportion of women who survived the Titanic is notably higher than that of men. This is due to the fact that during the shipwreck a <u>"women and children first"</u> policy was applied so that they could reach a lifeboat first. This decision probably had a major impact on the difference in survival rates between genders.</p>
+								<div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python"># Distribución de la supervivencia por género
+survival_gender = train_data.groupby(['Sex', 'Survived']).size().unstack()
+										
+# Grafico de distribución de la supervivencia por género
+survival_gender.plot(kind='bar', stacked=True, title='Distribución de la Supervivencia por Género')
+plt.xlabel('Género')
+plt.ylabel('Número de Pasajeros')
+plt.xticks(rotation=0)  # Evitar rotación de etiquetas en el eje x
+plt.legend(['No Sobrevivió', 'Sobrevivió'], loc='upper right')
+plt.show()</code></pre>
+								  </div>
+								  <br>
+								  <img class="center" src="images/survival_gender.png" alt="" />
+								  <p>When plotting the data for the Pclass attribute, we can clearly observe that the proportion of passengers in first class is the highest, followed by second class, while passengers in third class have the lowest survival rates. This was surely due to the scarce availability of resources and access to lifeboats where priority should have been given to the higher classes.</p>
+								  <p>So with this in mind, we must keep the Pclass attribute in mind as it becomes an essential attribute for our model.</p>
+								  <div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python"># Distribución de la supervivencia por clase
+survival_class = train_data.groupby(['Pclass', 'Survived']).size().unstack()
+										
+# Grafico de la Distribución de supervivencia por clase
+survival_class.plot(kind='bar', stacked=True, title='Distribución de la Supervivencia por Clase')
+plt.xlabel('Clase')
+plt.ylabel('Número de Pasajeros')
+plt.xticks(rotation=0)  # Evitar rotación de etiquetas en el eje x
+plt.legend(['No Sobrevivió', 'Sobrevivió'], loc='upper right')
+plt.show()</code></pre>
+								  </div>
+								  <br>
+								  <img class="center" src="images/survival_class_gender.png" alt="" />
+								  <p>We can also look at the distribution of survival by gender and passenger class to keep in mind the data mentioned above.</p>
+								  <p>We can see it better in this <b>heat map</b></p>
+								  <div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python"># Tasa de supervivencia por género y clase
+survival_rates = train_data.groupby(['Sex', 'Pclass'])['Survived'].mean().reset_index()
+										
+# pivot de datos para el mapa de calor
+pivot_table = survival_rates.pivot_table(index='Sex', columns='Pclass', values='Survived')
+										
+# Graficar el mapa de calor
+plt.figure(figsize=(8, 6))
+sns.heatmap(pivot_table, annot=True, cmap="YlGnBu", fmt=".2f", cbar=True,
+			xticklabels=['1ra Clase', '2da Clase', '3ra Clase'],
+			yticklabels=['Mujer', 'Hombre'])
+plt.title('Tasa de Supervivencia por Género y Clase')
+plt.xlabel('Clase')
+plt.ylabel('Género')
+plt.show()</code></pre>
+								  </div>
+								  <br>								  
+								  <img class="center" src="images/heat_map_gender.png" alt="" />
+								  <p>As we can see, being a woman and being in first class gives us a 97% chance of survival, while if we go to the other extreme, being a man and being in third class, the chances of survival were very low at 14%.</p>
+								</br>
+								
+								<b>Age</b>
+								<p>In the attribute "Age" we can observe in general that children have a significantly higher survival rate compared to adults, this is due to the prioritization of the evacuation of children, which had a higher percentage of survivors for this group.</p>
+								<div class="code-container">
+									<a class="clipboard-button">
+									  <i class="fa fa-clipboard"></i>
+									</a>
+									<pre><code class="language-python"># Subconjuntos de edades para los que sobrevivieron y los que no sobrevivieron
+survived_ages = train_data[train_data.Survived == 1]["Age"].dropna()
+not_survived_ages = train_data[train_data.Survived == 0]["Age"].dropna()
+										
+# Estilo de Seaborn
+sns.set(style="whitegrid")
+										
+# gráfico de histograma para las distribuciones de edad
+plt.figure(figsize=(10, 6))
+sns.histplot(survived_ages, bins=20, color='g', label='Sobrevivió', alpha=0.5)
+sns.histplot(not_survived_ages, bins=20, color='r', label='No Sobrevivió', alpha=0.5)
+plt.title('Distribución de Edades por Supervivencia')
+plt.xlabel('Edad')
+plt.ylabel('Número de Pasajeros')
+plt.legend()
+plt.show()</code></pre>
+								  </div>
+								  <br>								  
+								  <img class="center" src="images/survivor_age.png" alt="" />
+								  <header>
+									<h3>Graph of relationship between all variables</h3>
+								</header>
+								<img class="center" src="images/all_variables_chart.png" alt="" />
 							</section>
 						</article>
 						<hr />
